@@ -1,8 +1,8 @@
 package com.anodiam.StudentMasterData.security;
 
 import com.anodiam.StudentMasterData.model.User;
-import com.anodiam.StudentMasterData.serviceRepository.userProfile.user.UserRepository;
-import com.anodiam.StudentMasterData.serviceRepository.userProfile.user.UserService;
+import com.anodiam.StudentMasterData.serviceRepository.user.user.UserRepository;
+import com.anodiam.StudentMasterData.serviceRepository.user.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

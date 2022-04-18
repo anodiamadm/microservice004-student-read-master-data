@@ -1,4 +1,4 @@
-package com.anodiam.StudentMasterData.serviceRepository.userProfile.Role;
+package com.anodiam.StudentMasterData.serviceRepository.user.Role;
 
 import com.anodiam.StudentMasterData.model.Role;
 

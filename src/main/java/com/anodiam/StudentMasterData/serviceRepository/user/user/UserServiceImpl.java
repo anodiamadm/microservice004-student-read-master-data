@@ -1,4 +1,4 @@
-package com.anodiam.StudentMasterData.serviceRepository.userProfile.user;
+package com.anodiam.StudentMasterData.serviceRepository.user.user;
 
 import com.anodiam.StudentMasterData.model.User;
 

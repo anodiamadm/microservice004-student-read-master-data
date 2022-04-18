@@ -1,6 +1,6 @@
 package com.anodiam.StudentMasterData.security;
 
-import com.anodiam.StudentMasterData.serviceRepository.userProfile.user.UserRepository;
+import com.anodiam.StudentMasterData.serviceRepository.user.user.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -67,9 +67,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                                                           TOKEN_PREFIX, HEADER_STRING)))
                 .authorizeRequests()
 //                Configure Access Rules
-                .antMatchers("/api/user/*").authenticated()
                 .antMatchers("/api/master-data/*").authenticated()
-                .antMatchers("/api/address/*").authenticated();
+                .antMatchers("/api/master-data/board/*").authenticated()
+                .antMatchers("/api/master-data/level/*").authenticated()
+                .antMatchers("/api/master-data/subject/*").authenticated();
     }
 
     @Bean

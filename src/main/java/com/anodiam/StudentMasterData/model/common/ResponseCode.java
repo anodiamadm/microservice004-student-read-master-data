@@ -1,12 +1,13 @@
 package com.anodiam.StudentMasterData.model.common;
 public enum ResponseCode {
-    SUCCESS(0, "SUCCESS: Microsvc003: Student Profile: Success!"),
-    FAILURE(1, "ERR: Microsvc003: Student Profile: Failure with exception message: "),
-    BLANK_ID(2, "ERR: Microsvc003: Student Profile: Student Profile ID is blank!"),
-    USER_ALREADY_EXISTS(3, "ERR: Microsvc003: Student Profile: Username already exists!"),
-    PROFILE_INVALID(4, "ERR: Microsvc003: Student Profile: Student Profile invalid!"),
-    USER_ID_ABSENT(5, "ERR: Microsvc003: Student Profile: User Id absent!"),
-    EMAIL_INVALID(6, "ERR: Microsvc003: Student Profile: Email invalid!");
+    SUCCESS(0, "SUCCESS: Microsvc004: Student Read Master Data: Success!"),
+    FAILURE(1, "ERR: Microsvc004: Student Read Master Data: Failure with exception message: "),
+    BOARD_ID_NOT_FOUND(20, "ERR: Microsvc004: Student Read Master Data: " +
+            "Board Id not found!"),
+    LEVEL_ID_NOT_FOUND(30, "ERR: Microsvc004: Student Read Master Data: " +
+            "Level Id not found!"),
+    SUBJECT_ID_NOT_FOUND(40, "ERR: Microsvc004: Student Read Master Data: " +
+            "Subject Id not found!");
 
     private Integer id;
     private String message;

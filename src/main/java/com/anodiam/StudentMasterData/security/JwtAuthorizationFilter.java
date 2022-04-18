@@ -1,7 +1,7 @@
 package com.anodiam.StudentMasterData.security;
 
 import com.anodiam.StudentMasterData.model.User;
-import com.anodiam.StudentMasterData.serviceRepository.userProfile.user.UserRepository;
+import com.anodiam.StudentMasterData.serviceRepository.user.user.UserRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.security.authentication.AuthenticationManager;

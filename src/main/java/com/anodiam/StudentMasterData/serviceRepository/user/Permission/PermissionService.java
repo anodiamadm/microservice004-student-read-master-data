@@ -1,4 +1,4 @@
-package com.anodiam.StudentMasterData.serviceRepository.userProfile.Permission;
+package com.anodiam.StudentMasterData.serviceRepository.user.Permission;
 
 import com.anodiam.StudentMasterData.model.Permission;
 
