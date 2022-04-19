@@ -67,10 +67,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                                                           TOKEN_PREFIX, HEADER_STRING)))
                 .authorizeRequests()
 //                Configure Access Rules
-                .antMatchers("/api/master-data/*").authenticated()
-                .antMatchers("/api/master-data/board/*").authenticated()
-                .antMatchers("/api/master-data/level/*").authenticated()
-                .antMatchers("/api/master-data/subject/*").authenticated();
+                .antMatchers("/api/master-data/**").authenticated()
+                .antMatchers("/api/master-data/**").hasRole("USER")
+                .antMatchers("/api/master-data/**").hasAuthority("STUDENT_ACCESS");
     }
 
     @Bean
