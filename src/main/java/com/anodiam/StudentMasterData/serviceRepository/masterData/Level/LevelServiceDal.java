@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,35 +22,34 @@ class LevelServiceDal extends LevelServiceImpl {
 
     @Override
     public List<Level> findAll() {
+        List<Level> returnedLevels = Collections.emptyList();
         try {
-            List<Level> levels = levelRepository.findAll();
-            if(!levels.isEmpty()) {
-                return levels;
-            }
+            returnedLevels = levelRepository.findAll();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return null;
+        return returnedLevels;
     }
 
     @Override
     public Optional<Level> findById(BigInteger levelId) {
-        Optional<Level> levelById = levelRepository.findById(levelId);
+        Level levelReturned = new Level();
         try {
-            if(levelById.isPresent()){
-                levelById.get().setMessageResponse(new MessageResponse(ResponseCode.SUCCESS.getID(),
-                        ResponseCode.SUCCESS.getMessage()));
-                return levelById;
+            Optional<Level> optionalLevel = levelRepository.findById(levelId);
+            if(optionalLevel.isPresent()){
+                levelReturned = optionalLevel.get();
+                levelReturned.setMessageResponse(new
+                        MessageResponse(ResponseCode.SUCCESS.getID(),
+                        ResponseCode.SUCCESS.getMessage() + levelReturned.getLevelName()));
             } else {
-                levelById.get().setMessageResponse(new MessageResponse(ResponseCode.LEVEL_ID_NOT_FOUND.getID(),
+                levelReturned.setMessageResponse(new MessageResponse(ResponseCode.LEVEL_ID_NOT_FOUND.getID(),
                         ResponseCode.LEVEL_ID_NOT_FOUND.getMessage() + levelId));
             }
         } catch (Exception exception) {
             exception.printStackTrace();
-            levelById.get().setMessageResponse(new MessageResponse(ResponseCode.FAILURE.getID(),
+            levelReturned.setMessageResponse(new MessageResponse(ResponseCode.FAILURE.getID(),
                     ResponseCode.FAILURE.getMessage() + exception.getMessage()));
         }
-        return levelById;
+        return Optional.of(levelReturned);
     }
-
 }

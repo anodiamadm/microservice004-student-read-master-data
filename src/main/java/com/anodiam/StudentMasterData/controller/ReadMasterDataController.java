@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -32,80 +33,83 @@ public class ReadMasterDataController {
     @GetMapping("/boards")
     @ResponseBody
     public List<Board> getAllBoards() throws Exception {
+        List<Board> returnedBoards = Collections.emptyList();
         try {
-            return boardService.findAll();
-        } catch (Exception e) {
-//            e.printStackTrace();
-            return null;
+            returnedBoards = boardService.findAll();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
+        return returnedBoards;
     }
 
     //  @GetMapping("levels") :: List all levels - to populate dropdowns in the frontend
     @GetMapping("/levels")
     @ResponseBody
     public List<Level> getAllLevels() throws Exception {
+        List<Level> returnedLevels = Collections.emptyList();
         try {
-            return levelService.findAll();
-        } catch (Exception e) {
-//            e.printStackTrace();
-            return null;
+            returnedLevels = levelService.findAll();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
+        return returnedLevels;
     }
 
     //  @GetMapping("subjects") :: List all subjects - to populate dropdowns in the frontend
     @GetMapping("/subjects")
     @ResponseBody
     public List<Subject> getAllSubjects() throws Exception {
+        List<Subject> returnedSubjects = Collections.emptyList();
         try {
-            return subjectService.findAll();
-        } catch (Exception e) {
-//            e.printStackTrace();
-            return null;
+            returnedSubjects = subjectService.findAll();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
+        return returnedSubjects;
     }
 
     //  GET :: api/master-data/board/(BigInt board_id) :: show board with board_id
     @GetMapping("/board/{id}")
     @ResponseBody
     public Board getBoardById(@PathVariable("id") BigInteger boardId) throws Exception {
+        Board boardReturned = new Board();
         try {
-            return boardService.findById(boardId).get();
-        } catch (Exception e) {
-//            e.printStackTrace();
-            Board nullBoard = new Board();
-            nullBoard.setMessageResponse(new MessageResponse(ResponseCode.BOARD_ID_NOT_FOUND.getID(),
-                    ResponseCode.BOARD_ID_NOT_FOUND.getMessage() + boardId));
-            return nullBoard;
+            boardReturned = boardService.findById(boardId).get();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            boardReturned.setMessageResponse(new MessageResponse(ResponseCode.FAILURE.getID(),
+                    ResponseCode.FAILURE.getMessage() + exception.getMessage()));
         }
+        return boardReturned;
     }
 
 //  GET :: api/master-data/level/(BigInt level_id) :: show level with level_id
     @GetMapping("/level/{id}")
     @ResponseBody
     public Level getLevelById(@PathVariable("id") BigInteger levelId) throws Exception {
+        Level levelReturned = new Level();
         try {
-            return levelService.findById(levelId).get();
-        } catch (Exception e) {
-//            e.printStackTrace();
-            Level nullLevel = new Level();
-            nullLevel.setMessageResponse(new MessageResponse(ResponseCode.LEVEL_ID_NOT_FOUND.getID(),
-                    ResponseCode.LEVEL_ID_NOT_FOUND.getMessage() + levelId));
-            return nullLevel;
+            levelReturned = levelService.findById(levelId).get();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            levelReturned.setMessageResponse(new MessageResponse(ResponseCode.FAILURE.getID(),
+                    ResponseCode.FAILURE.getMessage() + exception.getMessage()));
         }
+        return levelReturned;
     }
 
 //  GET :: api/master-data/subject/(BigInt subject_id) :: show subject with subject_id
     @GetMapping("/subject/{id}")
     @ResponseBody
     public Subject getSubjectById(@PathVariable("id") BigInteger subjectId) throws Exception {
+        Subject subjectReturned = new Subject();
         try {
-            return subjectService.findById(subjectId).get();
-        } catch (Exception e) {
-    //            e.printStackTrace();
-            Subject nullSubject = new Subject();
-            nullSubject.setMessageResponse(new MessageResponse(ResponseCode.SUBJECT_ID_NOT_FOUND.getID(),
-                    ResponseCode.SUBJECT_ID_NOT_FOUND.getMessage() + subjectId));
-            return nullSubject;
+            subjectReturned = subjectService.findById(subjectId).get();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            subjectReturned.setMessageResponse(new MessageResponse(ResponseCode.FAILURE.getID(),
+                    ResponseCode.FAILURE.getMessage() + exception.getMessage()));
         }
+        return subjectReturned;
     }
 }

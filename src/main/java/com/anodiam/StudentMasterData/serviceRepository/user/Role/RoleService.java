@@ -2,6 +2,8 @@ package com.anodiam.StudentMasterData.serviceRepository.user.Role;
 
 import com.anodiam.StudentMasterData.model.Role;
 
+import java.util.Optional;
+
 public interface RoleService {
-    Role findByRoleName(String roleName);
+    Optional<Role> findByRoleName(String roleName);
 }

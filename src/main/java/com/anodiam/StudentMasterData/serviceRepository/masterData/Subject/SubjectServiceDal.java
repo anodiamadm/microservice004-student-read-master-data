@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,35 +22,33 @@ class SubjectServiceDal extends SubjectServiceImpl {
 
     @Override
     public List<Subject> findAll() {
+        List<Subject> returnedSubjects = Collections.emptyList();
         try {
-            List<Subject> subjects = subjectRepository.findAll();
-            if(!subjects.isEmpty()) {
-                return subjects;
-            }
+            returnedSubjects = subjectRepository.findAll();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return null;
+        return returnedSubjects;
     }
 
     @Override
     public Optional<Subject> findById(BigInteger subjectId) {
-        Optional<Subject> subjectById = subjectRepository.findById(subjectId);
+        Subject subjectReturned = new Subject();
         try {
-            if(subjectById.isPresent()){
-                subjectById.get().setMessageResponse(new MessageResponse(ResponseCode.SUCCESS.getID(),
-                        ResponseCode.SUCCESS.getMessage()));
-                return subjectById;
+            Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
+            if(optionalSubject.isPresent()){
+                subjectReturned = optionalSubject.get();
+                subjectReturned.setMessageResponse(new MessageResponse(ResponseCode.SUCCESS.getID(),
+                        ResponseCode.SUCCESS.getMessage() + subjectReturned.getSubjectName()));
             } else {
-                subjectById.get().setMessageResponse(new MessageResponse(ResponseCode.SUBJECT_ID_NOT_FOUND.getID(),
+                subjectReturned.setMessageResponse(new MessageResponse(ResponseCode.SUBJECT_ID_NOT_FOUND.getID(),
                         ResponseCode.SUBJECT_ID_NOT_FOUND.getMessage() + subjectId));
             }
         } catch (Exception exception) {
             exception.printStackTrace();
-            subjectById.get().setMessageResponse(new MessageResponse(ResponseCode.FAILURE.getID(),
+            subjectReturned.setMessageResponse(new MessageResponse(ResponseCode.FAILURE.getID(),
                     ResponseCode.FAILURE.getMessage() + exception.getMessage()));
         }
-        return subjectById;
+        return Optional.of(subjectReturned);
     }
-
 }

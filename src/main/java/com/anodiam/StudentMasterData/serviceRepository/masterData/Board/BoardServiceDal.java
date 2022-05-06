@@ -1,5 +1,6 @@
 package com.anodiam.StudentMasterData.serviceRepository.masterData.Board;
 
+import com.anodiam.StudentMasterData.model.Permission;
 import com.anodiam.StudentMasterData.model.common.MessageResponse;
 import com.anodiam.StudentMasterData.model.common.ResponseCode;
 import com.anodiam.StudentMasterData.model.masterData.Board;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,34 +22,34 @@ class BoardServiceDal extends BoardServiceImpl {
 
     @Override
     public List<Board> findAll() {
+        List<Board> returnedBoards = Collections.emptyList();
         try {
-            List<Board> boards = boardRepository.findAll();
-            if(!boards.isEmpty()) {
-                return boards;
-            }
+            returnedBoards = boardRepository.findAll();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return null;
+        return returnedBoards;
     }
 
     @Override
     public Optional<Board> findById(BigInteger boardId) {
-        Optional<Board> boardById = boardRepository.findById(boardId);
+        Board boardReturned = new Board();
         try {
-            if(boardById.isPresent()){
-                boardById.get().setMessageResponse(new MessageResponse(ResponseCode.SUCCESS.getID(),
-                        ResponseCode.SUCCESS.getMessage()));
-                return boardById;
+            Optional<Board> optionalBoard = boardRepository.findById(boardId);
+            if(optionalBoard.isPresent()){
+                boardReturned = optionalBoard.get();
+                boardReturned.setMessageResponse(new
+                        MessageResponse(ResponseCode.SUCCESS.getID(),
+                        ResponseCode.SUCCESS.getMessage() + boardReturned.getBoardName()));
             } else {
-                boardById.get().setMessageResponse(new MessageResponse(ResponseCode.BOARD_ID_NOT_FOUND.getID(),
+                boardReturned.setMessageResponse(new MessageResponse(ResponseCode.BOARD_ID_NOT_FOUND.getID(),
                         ResponseCode.BOARD_ID_NOT_FOUND.getMessage() + boardId));
             }
         } catch (Exception exception) {
             exception.printStackTrace();
-            boardById.get().setMessageResponse(new MessageResponse(ResponseCode.FAILURE.getID(),
+            boardReturned.setMessageResponse(new MessageResponse(ResponseCode.FAILURE.getID(),
                     ResponseCode.FAILURE.getMessage() + exception.getMessage()));
         }
-        return boardById;
+        return Optional.of(boardReturned);
     }
 }
